@@ -4,4 +4,4 @@
 - THIS FILE JUST IMPORTS ALL THE FEATURES IMPLEMENTED UNDER THE FEATURES DIRECTORY
 """
 
-from .features.common-commands import *
+from .features.common_commands import *

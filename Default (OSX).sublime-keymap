@@ -1,4 +1,10 @@
 
+// TODOS
+// > C-o - new line without indenting
+// > C-x C-u - uppercase
+// > C-x C-l - lowercase
+// > C-space - setting the mark
+
 [
     {
         "keys": ["alt+`"],
@@ -82,11 +88,4 @@
 			{ "key": "num_selections", "operator": "not_equal", "operand": 1 }
 		]
 	}
-
-
-
-
-
-
-
 ]

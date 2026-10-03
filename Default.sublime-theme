@@ -1,0 +1,57 @@
+{
+	"variables": {
+		"ui_font_face": "MartianMono Nerd Font Mono",
+		"ui_font_size": 12
+	},
+
+	"rules": [
+		// TAB BAR - FILE NAMES
+		{
+			"class": "tab_label",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// SIDEBAR - FILE/FOLDER NAMES
+		{
+			"class": "sidebar_label",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// SIDEBAR - FOLDER SECTION HEADINGS
+		{
+			"class": "sidebar_heading",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// COMMAND PALETTE / GOTO ANYTHING - MAIN RESULT TEXT
+		{
+			"class": "quick_panel_label",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// COMMAND PALETTE / GOTO ANYTHING - PATH/SUBTITLE TEXT UNDER EACH RESULT
+		{
+			"class": "quick_panel_path_label",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// FOR THINGS LIKE COMMAND PALETTE ETC
+		{
+			"class": "text_line_control",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		},
+
+		// GENERAL DIALOGS, BUTTONS, AND OTHER MISC LABELS
+		{
+			"class": "label_control",
+			"font.face": "var(ui_font_face)",
+			"font.size": "var(ui_font_size)"
+		}
+	]
+}

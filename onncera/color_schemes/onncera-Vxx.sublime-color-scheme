@@ -1,0 +1,79 @@
+
+{
+	"name": "onncera's personal theme",
+
+	// TODO - change to the actual colors I want to use
+	"variables": {
+		"background": "#0C0C0C",
+		"foreground": "#CCCCCC",  // source code
+		"selections": "midnightblue",
+		"comment":    "#D3B58D",
+		"keyword":    "#CCCCCC",
+		"strings":    "#13A10E",
+		"accents":    "#90D5FF"   // class names , functions , numbers , constants , etc
+	},
+
+	"globals": {
+		"background": "var(background)",
+		"foreground": "var(foreground)",
+		"caret": "var(foreground)",
+		"invisibles": "color(var(foreground) alpha(0.30))",
+		"line_highlight": "color(var(foreground) alpha(0.10))",
+		"selection": "color(var(selections) alpha(1.00))",
+		"selection_border": "var(background)",
+		"shadow": "color(black alpha(0.5))",
+
+
+		"accent": "var(accents)",
+		"block_caret": "var(foreground)",
+		"brackets_options": "underline",
+		"brackets_foreground": "var(keyword)",
+		"gutter": "var(background)",
+		"gutter_foreground": "var(comment)",
+		"inactive_selection": "color(var(selections) alpha(0.50))"
+	},
+
+	// TODO - can always manual change colors
+	"rules": [
+		{
+			"scope": "comment, punctuation.definition.comment",
+			"foreground": "var(comment)"
+		},
+
+		{
+			"scope": "string, constant.character, string.quoted, string.unquoted",
+			"foreground": "var(strings)"
+		},
+
+		{
+			"scope": "keyword, keyword.control, keyword.operator, keyword.declaration, storage, storage.type, storage.modifier, meta.preprocessor, meta.annotation",
+			"foreground": "var(keyword)"
+		},
+
+		{
+			"scope": "entity.name, entity.name.function, entity.name.class, entity.name.struct, entity.name.type, entity.name.enum, entity.name.trait, entity.name.impl, entity.name.tag, entity.name.constant, variable.function, variable.type, support.function, support.class, support.type, support.variable",
+			"foreground": "var(accents)"
+		},
+
+		{
+			"scope": "constant.numeric, constant.language, constant.other, support.constant",
+			"foreground": "var(accents)"
+		},
+
+		{
+			"scope": "variable, variable.parameter, variable.other, variable.language",
+			"foreground": "var(foreground)"
+		},
+
+		{
+			"scope": "punctuation, punctuation.separator, punctuation.terminator, punctuation.section",
+			"foreground": "var(foreground)"
+		},
+
+		{
+			"scope": "invalid, invalid.deprecated",
+			"foreground": "var(background)",
+			"background": "var(strings)"
+		}
+	]
+}

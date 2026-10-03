@@ -1,0 +1,40 @@
+{
+	"name": "onncera minimal - white",
+	"author": "you",
+
+	"variables": {
+		"background": "#FFFFFF",
+		"foreground": "#000000",
+		"comment":    "darkgreen"
+	},
+
+	"globals": {
+		"background": "var(background)",
+		"foreground": "var(foreground)",
+		"caret": "var(foreground)",
+
+		"line_highlight": "color(var(foreground) alpha(0.05))",
+		"invisibles": "color(var(foreground) alpha(0.20))",
+		"selection": "var(foreground)",
+		"selection_foreground": "var(background)",
+		"selection_border": "var(foreground)",
+		"inactive_selection": "color(var(foreground) alpha(0.08))",
+		"misspelling": "color(var(comment) alpha(0.80))",
+		"shadow": "color(var(foreground) alpha(0.30))",
+
+		"accent": "var(comment)",
+		"brackets_options": "underline",
+		"brackets_foreground": "color(var(foreground) alpha(0.60))",
+
+		"gutter": "var(background)",
+		"gutter_foreground": "color(var(foreground) alpha(0.35))"
+	},
+
+	"rules": [
+		{
+			"name": "Comment",
+			"scope": "comment, punctuation.definition.comment",
+			"foreground": "var(comment)"
+		}
+	]
+}

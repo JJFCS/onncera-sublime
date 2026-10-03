@@ -1,0 +1,7 @@
+
+[
+    {
+        "keys": ["alt+`"],
+        "command": "toggle_terminus_panel"
+    }
+]

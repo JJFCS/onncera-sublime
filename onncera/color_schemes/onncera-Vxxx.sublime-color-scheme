@@ -1,0 +1,59 @@
+{
+	"name": "onncera's port of dylan falconer helix theme",  // anything , check on claude code chat - https://github.com/Falconerd/helix_themes
+	"author": "onncera",
+
+	"variables": {
+		"background": "#00001C",
+		"foreground": "#FFFFFF",
+		"keyword":    "#2ECC71",
+		"string":     "#90D5FF"
+	},
+
+	"globals": {
+		"background": "var(background)",
+		"foreground": "var(foreground)",
+		"caret": "var(foreground)",
+		"block_caret": "var(foreground)",
+
+		"line_highlight": "color(var(foreground) alpha(0.05))",
+
+		"invisibles": "color(var(foreground) alpha(0.25))",
+		"selection": "color(var(foreground) alpha(0.15))",
+		"selection_border": "var(background)",
+		"inactive_selection": "color(var(foreground) alpha(0.10))",
+		"misspelling": "var(keyword)",
+		"shadow": "color(black alpha(0.5))",
+
+		"accent": "var(keyword)",
+		"brackets_options": "underline",
+		"brackets_foreground": "var(keyword)",
+
+		"gutter": "var(background)",
+		"gutter_foreground": "color(var(foreground) alpha(0.4))"
+	},
+
+	"rules": [
+		{
+			"name": "Comment",
+			"scope": "comment, punctuation.definition.comment",
+			"foreground": "color(var(foreground) alpha(0.35))",
+			"font_style": "italic"
+		},
+		{
+			"name": "Keyword",
+			"scope": "keyword, keyword.control, keyword.operator, keyword.declaration, storage, storage.type, storage.modifier, meta.preprocessor, meta.annotation",
+			"foreground": "var(keyword)",
+			"font_style": "bold"
+		},
+		{
+			"name": "String",
+			"scope": "string, constant.character, string.quoted, string.unquoted",
+			"foreground": "var(string)"
+		},
+		{
+			"name": "Everything else (source code)",
+			"scope": "entity.name, entity.name.function, entity.name.class, entity.name.struct, entity.name.type, entity.name.enum, entity.name.trait, entity.name.impl, entity.name.tag, entity.name.constant, variable.function, variable.type, support.function, support.class, support.type, support.variable, constant.numeric, constant.language, constant.other, support.constant, variable, variable.parameter, variable.other, variable.language, punctuation, punctuation.separator, punctuation.terminator, punctuation.section",
+			"foreground": "var(foreground)"
+		}
+	]
+}

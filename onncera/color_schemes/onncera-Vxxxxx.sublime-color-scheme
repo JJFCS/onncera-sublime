@@ -1,0 +1,44 @@
+{
+	"name": "Dark Minimal (3 Color)",
+	"author": "you",
+
+	// Same recipe as the Sean Barrett theme, just inverted (dark bg).
+	// Three colors, full stop - everything below is one of these three
+	// at a different opacity, no new hues added.
+	"variables": {
+		"background": "#0B0B0B",
+		"foreground": "#FFFFFF",
+		"comment":    "green"
+	},
+
+	"globals": {
+		"background": "var(background)",
+		"foreground": "var(foreground)",
+		"caret": "var(foreground)",
+
+		"line_highlight": "color(var(foreground) alpha(0.06))",
+		"invisibles": "color(var(foreground) alpha(0.20))",
+		"selection": "color(var(foreground) alpha(0.15))",
+		"selection_border": "var(background)",
+		"inactive_selection": "color(var(foreground) alpha(0.08))",
+		"misspelling": "color(var(comment) alpha(0.80))",
+		"shadow": "color(black alpha(0.5))",
+
+		"accent": "var(comment)",
+		"brackets_options": "underline",
+		"brackets_foreground": "color(var(foreground) alpha(0.60))",
+
+		"gutter": "var(background)",
+		"gutter_foreground": "color(var(foreground) alpha(0.35))"
+	},
+
+	// Only ONE rule. Every scope that isn't a comment falls through to
+	// the global "foreground" automatically - no catch-all rule needed.
+	"rules": [
+		{
+			"name": "Comment",
+			"scope": "comment, punctuation.definition.comment",
+			"foreground": "var(comment)"
+		}
+	]
+}

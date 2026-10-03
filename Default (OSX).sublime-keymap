@@ -29,7 +29,7 @@
 	// SIMULATING EMACS CTRL+G
 	// THESE ARE IN REVERSE ORDER BECAUSE IT SEEMS TO BE THE WAY SUBLIME LIKES IT
 
-	{ "keys": ["ctrl+g"], "command": "seb_quit" },  // CATCH ALL - CLEAR SELECTION , DEACTIVATE MARK , DOES NOT FALL BACK TO GOTO LINE
+	{"keys": ["ctrl+g"], "command": "seb_quit" },  // CATCH ALL - CLEAR SELECTION , DEACTIVATE MARK , DOES NOT FALL BACK TO GOTO LINE
 
 	{
 		"keys": ["ctrl+g"],

@@ -13,14 +13,11 @@ class SebQuitCommand(sublime_plugin.TextCommand):
 	"""
 
 	def run(self, edit):
-		sel = self.view.sel()
+		regions = list(self.view.sel())
 
-		# KEEP ONLY THE LAST CURSOR (WHERE POINT VISUALLY IS) AND CLEAR ITS SELECTION
-		point = sel[-1].b
-		sel.clear()
-		sel.add(sublime.Region(point))
-
-		# mark integration: deactivate the mark if one is active
-		if  self.view.settings().get("onncera_mark_active", False):
-			self.view.settings().set("onncera_mark_active", False)
-			self.view.erase_regions("onncera_mark")
+		# IF THERE IS EXACTLY ONE SELECTION , COLLAPSE IT TO THE ACTIVE/CURSOR END
+		if len(regions) == 1 and not regions[0].empty():
+			position = regions[0].b
+			self.view.sel().clear()
+			self.view.sel().add(sublime.Region(position))
+			return

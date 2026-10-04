@@ -186,3 +186,46 @@ class SebMoveWordCommand(sublime_plugin.TextCommand):
 			selection.add(region)
 
 		view.show(selection[-1].b)
+
+
+class SebMoveParagraphCommand(sublime_plugin.TextCommand):
+
+	""" emacs m-} / m-{ (forward-paragraph / backward-paragraph)
+	"""
+
+	def run(self, edit, forward=True):
+		view      = self.view
+		selection = view.sel()
+		extend    = view.settings().get("onncera_mark_active", False)
+		last_row  = view.rowcol(view.size())[0]
+
+		def is_blank(row):
+			return view.substr(view.line(view.text_point(row, 0))).strip() == ""
+
+		regions = []
+		for sel in selection:
+			row = view.rowcol(sel.b)[0]
+
+			if  forward:
+				while row <= last_row and is_blank(row):
+					row += 1
+				while row <= last_row and not is_blank(row):
+					row += 1
+				point = view.size() if row > last_row else view.text_point(row, 0)
+			else:
+				while row >= 0 and is_blank(row):
+					row -= 1
+				while row >= 0 and not is_blank(row):
+					row -= 1
+				point = 0 if row < 0 else view.text_point(row, 0)
+
+			if extend:
+				regions.append(sublime.Region(sel.a, point))
+			else:
+				regions.append(sublime.Region(point, point))
+
+		selection.clear()
+		for region in regions:
+			selection.add(region)
+
+		view.show(selection[-1].b)

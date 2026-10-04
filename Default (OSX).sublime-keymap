@@ -1,8 +1,6 @@
 
 /* TODOS
 	> ISEARCH
-	> ctrl+up   - navigates to the next empty line - aka backward paragraph
-	> ctrl+down - navigates to the next empty line - aka forward  paragraph
 
 	commands that are done with AI and needs checking once have the time
 	> the entire common_commands.py is done with AI
@@ -44,6 +42,8 @@
 
 	{ "keys": ["ctrl+k"], "command": "seb_kill_line" },
 	{ "keys": ["ctrl+o"], "command": "seb_open_line" },
+	{ "keys": ["ctrl+up"],   "command": "seb_move_paragraph", "args": {"forward": false} },
+	{ "keys": ["ctrl+down"], "command": "seb_move_paragraph", "args": {"forward": true}  },
 
 	{ "keys": ["alt+f"], "command": "seb_move_word", "args": {"forward": true}  },
 	{ "keys": ["alt+b"], "command": "seb_move_word", "args": {"forward": false} },

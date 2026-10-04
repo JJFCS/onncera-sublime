@@ -1,6 +1,6 @@
 {
-	"font_face": "JetBrainsMono Nerd Font",  // MartianMono Nerd Font Mono
-	"font_size": 18,
+	"font_face": "MartianMono Nerd Font Mono",  // JetBrainsMono Nerd Font
+	"font_size": 15,
 	"font_options": ["no_italic", "no_calt", "no_clig", "no_liga"],
 
 	"ignored_packages":
@@ -15,8 +15,8 @@
 	"highlight_line":                    true,
 	"index_files":                       true,
 	"inverse_caret_state":               true,
-	"line_padding_top":                  -2,  // might need to play around with these settings every time you change fonts
-	"line_padding_bottom":               -2,  // might need to play around with these settings every time you change fonts
+	"line_padding_top":                  0,  // might need to play around with these settings every time you change fonts
+	"line_padding_bottom":               0,  // might need to play around with these settings every time you change fonts
 	"relative_line_numbers":             true,
 	"scroll_past_end":                   true,
 	"trim_trailing_white_space_on_save": true,
@@ -24,5 +24,5 @@
 	"tab_size":                          4,
 	"use_find_clipboard":                false,
 	"word_wrap":                         false,
-	"color_scheme": "onncera-Vxxxxx.sublime-color-scheme",
+	"color_scheme": "onncera-Vxx.sublime-color-scheme",
 }

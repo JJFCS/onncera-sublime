@@ -32,6 +32,36 @@ def seb_deactivate_mark(view):
 			selection.add(caret)
 
 
+class SebKillLineCommand(sublime_plugin.TextCommand):
+
+	""" emacs c-k
+	"""
+
+	def run(self, edit):
+		view = self.view
+
+		regions = []
+		for selection in view.sel():
+			point = selection.b
+			line  = view.line(point)
+
+			if   point < line.end():
+				 regions.append(
+				 	sublime.Region(point, line.end())
+				 )
+			elif point < view.size():
+				 regions.append(
+				 	sublime.Region(point, point + 1)
+				 )
+
+		if not regions:
+			return
+
+		sublime.set_clipboard("\n".join(view.substr(r) for r in regions))
+		for region in reversed(regions):
+			view.erase(edit, region)
+
+
 class SebMarkTracker(sublime_plugin.ViewEventListener):
 
 	"""
@@ -124,3 +154,35 @@ class SebSetMarkCommand(sublime_plugin.TextCommand):
 		settings.set("onncera_mark_active", True)
 		settings.set("onncera_mark_recent", True)
 		sublime.status_message("Mark set")
+
+
+class SebMoveWordCommand(sublime_plugin.TextCommand):
+
+	""" emacs alt-f & alt-b - AKA M-f & M-b
+	"""
+
+	def run(self, edit, forward=True):
+		view       = self.view
+		selection  = view.sel()
+		extend     = view.settings().get("onncera_mark_active", False)
+		separators = view.settings().get("word_separators", "")
+
+		regions = []
+		for sel in selection:
+			point = sel.b
+
+			if  forward:
+				point = view.find_by_class(point, True,  sublime.CLASS_WORD_END,   separators)
+			else:
+				point = view.find_by_class(point, False, sublime.CLASS_WORD_START, separators)
+
+			if  extend:
+				regions.append(sublime.Region(sel.a, point))
+			else:
+				regions.append(sublime.Region(point, point))
+
+		selection.clear()
+		for region in regions:
+			selection.add(region)
+
+		view.show(selection[-1].b)

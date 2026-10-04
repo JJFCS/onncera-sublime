@@ -1,18 +1,19 @@
 
 /* TODOS
 	> ISEARCH
+	> learn how to use MC in sublime text then we can know how to implement any features we want
 
 	commands that are done with AI and needs checking once have the time
 	> the entire common_commands.py is done with AI
 */
 
 [
-    {
-        "keys": ["alt+`"],
-        "command": "toggle_terminus_panel"
-    },
+	{
+		"keys": ["alt+`"],
+		"command": "toggle_terminus_panel"
+	},
 
-    // BASIC EMACS COMMANDS
+	// BASIC EMACS COMMANDS
 	{ "keys": ["alt+w"], "command": "copy" },
 	{ "keys": ["alt+x"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
 	{ "keys": ["alt+shift+,"], "command": "move_to", "args": {"to": "bof"} },
@@ -35,10 +36,20 @@
 	{ "keys": ["ctrl+x", "e"], "command": "run_macro" },
 	{ "keys": ["ctrl+x", "ctrl+u"], "command": "upper_case" },
 	{ "keys": ["ctrl+x", "ctrl+l"], "command": "lower_case" },
+	{ "keys": ["ctrl+x", "ctrl++"], "command": "increase_font_size" },
+	{ "keys": ["ctrl+x", "ctrl+="], "command": "increase_font_size" },
+	{ "keys": ["ctrl+x", "ctrl+-"], "command": "decrease_font_size" },
+
+	// MULTIPLE CURSORS
+	{ "keys": ["ctrl+f9"],  "command": "select_lines", "args": {"forward": false} },
+	{ "keys": ["ctrl+f10"], "command": "select_lines", "args": {"forward": true}  },
 
 	// KILL REGION (DOES NOTHING WITH NO SELECTION INSTEAD OF CUTTING THE WHOLE LINE)
 	{ "keys": ["ctrl+w"], "command": "cut",
 		"context": [{ "key": "selection_empty", "operator": "equal", "operand": false, "match_all": true }] },
+
+	{ "keys": ["pageup"],   "command": "seb_move_text", "args": {"up": true}  },
+	{ "keys": ["pagedown"], "command": "seb_move_text", "args": {"up": false} },
 
 	{ "keys": ["ctrl+k"], "command": "seb_kill_line" },
 	{ "keys": ["ctrl+o"], "command": "seb_open_line" },
@@ -47,6 +58,7 @@
 
 	{ "keys": ["alt+f"], "command": "seb_move_word", "args": {"forward": true}  },
 	{ "keys": ["alt+b"], "command": "seb_move_word", "args": {"forward": false} },
+	{ "keys": ["alt+d"], "command": "seb_kill_word" },
 
 	// MARK (MUST COME AFTER THE BASIC MOVEMENT BINDINGS ABOVE) - TODO update when more navigation keys are included
 	{ "keys": ["ctrl+space"], "command": "seb_set_mark" },

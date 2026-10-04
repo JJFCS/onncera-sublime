@@ -62,6 +62,18 @@ class SebKillLineCommand(sublime_plugin.TextCommand):
 			view.erase(edit, region)
 
 
+class SebMoveTextCommand(sublime_plugin.TextCommand):
+
+	""" emacs move-text (m-up / m-down)
+	- support reindents
+	"""
+
+	def run(self, edit, up=True):
+		view = self.view
+		view.run_command("swap_line_up" if up else "swap_line_down")
+		view.run_command("reindent", {"single_line": True})
+
+
 class SebMarkTracker(sublime_plugin.ViewEventListener):
 
 	"""
@@ -70,13 +82,23 @@ class SebMarkTracker(sublime_plugin.ViewEventListener):
 	TODO > how do we extend for future commands besides copy?
 	"""
 
+	KEEP_MARK_COMMANDS = ("swap_move_text")
+
+	def on_text_command(self, command_name, args):
+		if  command_name in self.KEEP_MARK_COMMANDS:
+			self.view.settings().set("onncera_keep_marked", True)
+
 	def on_post_text_command(self, command_name, args):
 		if  command_name != "seb_set_mark":
 			self.view.settings().set("onncera_mark_recent", False)
+		if  command_name in self.KEEP_MARK_COMMANDS:
+			self.view.settings().set("onncera_keep_marked", False)
 		if  command_name == "copy" and self.view.settings().get("onncera_mark_active", False):
 			seb_deactivate_mark(self.view)
 
 	def on_modified(self):
+		if  self.view.settings().get("onncera_keep_marked", False):
+			return
 		if  self.view.settings().get("onncera_mark_active", False):
 			seb_deactivate_mark(self.view)
 
@@ -146,10 +168,12 @@ class SebSetMarkCommand(sublime_plugin.TextCommand):
 			sublime.status_message("Mark deactivated")
 			return
 
-		# single tap: collapse the selection to the cursor and (re)set the mark there
-		point = selection[-1].b
+		# single tap: collapse every selection to its own cursor and (re)set the marks there
+		carets = [sel.b for sel in selection]
+
 		selection.clear()
-		selection.add(point)
+		for caret in carets:
+			selection.add(caret)
 
 		settings.set("onncera_mark_active", True)
 		settings.set("onncera_mark_recent", True)
@@ -219,7 +243,7 @@ class SebMoveParagraphCommand(sublime_plugin.TextCommand):
 					row -= 1
 				point = 0 if row < 0 else view.text_point(row, 0)
 
-			if extend:
+			if  extend:
 				regions.append(sublime.Region(sel.a, point))
 			else:
 				regions.append(sublime.Region(point, point))
@@ -229,3 +253,29 @@ class SebMoveParagraphCommand(sublime_plugin.TextCommand):
 			selection.add(region)
 
 		view.show(selection[-1].b)
+
+
+class SebKillWordCommand(sublime_plugin.TextCommand):
+
+	""" emacs alt-d
+	"""
+
+	def run(self, edit):
+		view = self.view
+		separators = view.settings().get("word_separators", "")
+
+		regions = []
+		for selection in view.sel():
+			point = selection.b
+			end   = view.find_by_class(point, True, sublime.CLASS_WORD_END, separators)
+
+			if  end > point:
+				regions.append(sublime.Region(point, end))
+
+		if not regions:
+			return
+
+		sublime.set_clipboard("\n".join(view.substr(r) for r in regions))
+
+		for region in reversed(regions):
+			view.erase(edit, region)

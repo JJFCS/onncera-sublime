@@ -1,9 +1,16 @@
 
-// TODOS
-// > C-o - new line without indenting
-// > C-x C-u - uppercase
-// > C-x C-l - lowercase
-// > C-space - setting the mark
+/* TODOS
+	> c-space - mark related features
+	> c-w
+	> alt-f
+	> alt-b
+	> YANKING FEATURE (PERHAPS)
+	> ISEARCH
+	> when press c-k .. that will be in the copy register
+
+	commands that are done with AI and needs checking once have the time
+	seb_quit , seb_open_line , seb_set_mark , seb_mark_tracker
+*/
 
 [
     {
@@ -12,24 +19,45 @@
     },
 
     // BASIC EMACS COMMANDS
-	{"keys": ["ctrl+b"], "command": "move", "args": {"by": "characters", "forward": false}},
-	{"keys": ["ctrl+f"], "command": "move", "args": {"by": "characters", "forward": true} },
-	{"keys": ["ctrl+p"], "command": "move", "args": {"by": "lines",      "forward": false}},
-	{"keys": ["ctrl+n"], "command": "move", "args": {"by": "lines",      "forward": true} },
-	{"keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol",     "extend": false}},
-	{"keys": ["ctrl+e"], "command": "move_to", "args": {"to": "hardeol", "extend": false}},
-	{"keys": ["ctrl+d"], "command": "right_delete"},
-	{"keys": ["ctrl+/"], "command": "undo"}, {"keys": ["ctrl+shift+/"], "command": "redo"},
-	{"keys": ["ctrl+x", "ctrl+s"], "command": "save"},
-	{"keys": ["ctrl+x", "ctrl+c"], "command": "exit"},
-	{"keys": ["ctrl+x", "("], "command": "toggle_record_macro" },
-	{"keys": ["ctrl+x", ")"], "command": "toggle_record_macro" },
-	{"keys": ["ctrl+x", "e"], "command": "run_macro" },
+	{ "keys": ["alt+x"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
+
+	{ "keys": ["ctrl+b"], "command": "move", "args": {"by": "characters", "forward": false} },
+	{ "keys": ["ctrl+f"], "command": "move", "args": {"by": "characters", "forward": true}  },
+	{ "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines",      "forward": false} },
+	{ "keys": ["ctrl+n"], "command": "move", "args": {"by": "lines",      "forward": true}  },
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol",     "extend":  false} },
+	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "hardeol", "extend":  false} },
+	{ "keys": ["ctrl+d"], "command": "right_delete"},
+	{ "keys": ["ctrl+/"], "command": "undo"}, {"keys": ["ctrl+shift+/"], "command": "redo" },
+	{ "keys": ["ctrl+x", "ctrl+s"], "command": "save" },
+	{ "keys": ["ctrl+x", "ctrl+c"], "command": "exit" },
+	{ "keys": ["ctrl+x", "("], "command": "toggle_record_macro" },
+	{ "keys": ["ctrl+x", ")"], "command": "toggle_record_macro" },
+	{ "keys": ["ctrl+x", "e"], "command": "run_macro" },
+	{ "keys": ["ctrl+x", "ctrl+u"], "command": "upper_case" },
+	{ "keys": ["ctrl+x", "ctrl+l"], "command": "lower_case" },
+
+	{ "keys": ["ctrl+o"], "command": "seb_open_line"},
+
+	// MARK (MUST COME AFTER THE BASIC MOVEMENT BINDINGS ABOVE)
+	{ "keys": ["ctrl+space"], "command": "seb_set_mark" },
+	{ "keys": ["ctrl+b"], "command": "move", "args": {"by": "characters", "forward": false, "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
+	{ "keys": ["ctrl+f"], "command": "move", "args": {"by": "characters", "forward": true,  "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
+	{ "keys": ["ctrl+p"], "command": "move", "args": {"by": "lines",      "forward": false, "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
+	{ "keys": ["ctrl+n"], "command": "move", "args": {"by": "lines",      "forward": true,  "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol",     "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
+	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "hardeol", "extend": true},
+		"context": [{ "key": "setting.onncera_mark_active", "operator": "equal", "operand": true }] },
 
 	// SIMULATING EMACS CTRL+G
 	// THESE ARE IN REVERSE ORDER BECAUSE IT SEEMS TO BE THE WAY SUBLIME LIKES IT
 
-	{"keys": ["ctrl+g"], "command": "seb_quit" },  // CATCH ALL - CLEAR SELECTION , DEACTIVATE MARK , DOES NOT FALL BACK TO GOTO LINE
+	{"keys": ["ctrl+g"], "command": "seb_quit"},  // CATCH ALL - CLEAR SELECTION , DEACTIVATE MARK , DOES NOT FALL BACK TO GOTO LINE
 
 	{
 		"keys": ["ctrl+g"],
@@ -87,5 +115,5 @@
 		"context": [
 			{ "key": "num_selections", "operator": "not_equal", "operand": 1 }
 		]
-	}
+	},
 ]

@@ -10,11 +10,15 @@ class SebQuitCommand(sublime_plugin.TextCommand):
 
 	""" emacs c-g
 	- A QUIT COMMAND THAT COLLASPE SELECTION(S) TO THE CURSOR AND DEACTIVATE THE MARK
-	- TODO > implement setting the mark and deactivating it
 	"""
 
-	def run(self , edit):
+	def run(self, edit):
+		settings  = self.view.settings()
 		selection = self.view.sel()
+
+		settings.set("onncera_mark_active", False)
+		settings.set("onncera_mark_recent", False)
+		self.view.erase_regions("onncera_mark")
 
 		if len(selection) == 0:
 			return
@@ -29,3 +33,78 @@ class SebQuitCommand(sublime_plugin.TextCommand):
 		selection.clear()
 		for caret in carets:
 			selection.add(caret)
+
+
+class SebOpenLineCommand(sublime_plugin.TextCommand):
+
+	""" emacs c-o
+	- INSERT A NEWLINE AT THE CURSOR AND LEAVE THE CURSOR WHERE IT WAS , WITHOUT AUTO INDENT
+	"""
+
+	def run(self, edit):
+		view = self.view
+		selection = view.sel()
+		points = sorted(r.begin() for r in selection)
+
+		inserts = []
+		for point in points:
+			line   = view.line(point); text = view.substr(line)
+			indent = text[:len(text) - len(text.lstrip(" \t"))]
+
+			column = point - line.begin()
+			prefix = indent[:column] if column < len(indent) else indent
+			inserts.append("\n" + prefix)
+
+		selection.clear()
+
+		for point, s in zip(reversed(points), reversed(inserts)):
+			view.insert(edit, point, s)
+
+		offset = 0
+		for point, s in zip(points, inserts):
+			selection.add(point + offset)
+			offset += len(s)
+
+
+class SebSetMarkCommand(sublime_plugin.TextCommand):
+
+	""" emacs c-space
+	- on first press we set the mark and activate it and movement keys will select
+	- on press again we drop the current selection but the mark stays active at the new cursor position
+	- on press twice in a row we deactivate the mark and drop the selection
+	"""
+
+	def run(self, edit):
+		view = self.view
+		selection = view.sel()
+		settings  = view.settings()
+
+		if len(sel) == 0:
+			return
+
+		# double tap: the previous command was also seb_set_mark
+		if  settings.get("onncera_mark_active", False) and settings.get("onncera_mark_recent", False):
+			settings.set("onncera_mark_active", False)
+			settings.set("onncera_mark_recent", False)
+			view.erase_regions("onncera_mark")
+			sublime.status_message("Mark deactivated")
+			return
+
+		# single tap: collapse the selection to the cursor and (re)set the mark there
+		point = selection[-1].b
+		selection.clear()
+		selection.add(point)
+
+		settings.set("onncera_mark_active", True)
+		settings.set("onncera_mark_recent", True)
+		sublime.status_message("Mark set")
+
+
+class SebMarkTracker(sublime_plugin.ViewEventListener):
+
+	""" - any command other than seb_set_mark breaks the "pressed twice in a row" chain
+	"""
+
+	def on_post_text_command(self, command_name, args):
+		if command_name != "seb_set_mark":
+			self.view.settings().set("onncera_mark_recent", False)

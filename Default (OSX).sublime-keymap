@@ -1,15 +1,17 @@
 
 /* TODOS
-	> c-space - mark related features
 	> c-w
 	> alt-f
 	> alt-b
+	> alt-w
 	> YANKING FEATURE (PERHAPS)
 	> ISEARCH
 	> when press c-k .. that will be in the copy register
+	> alt-< (in sublime is like ctrl+home or some shit)
+	> alt-> (in sublime is like ctrl+end  or some shit)
 
 	commands that are done with AI and needs checking once have the time
-	seb_quit , seb_open_line , seb_set_mark , seb_mark_tracker
+	> the entire common_commands.py is done with AI
 */
 
 [

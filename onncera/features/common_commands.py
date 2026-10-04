@@ -6,6 +6,51 @@
 import sublime
 import sublime_plugin
 
+def seb_deactivate_mark(view):
+
+	""" deactivate the mark and collaspe each selection to its caret (point)
+	- this feature is used tandem with c-g and region commands
+	"""
+
+	settings  = view.settings()
+	selection = view.sel()
+
+	settings.set("onncera_mark_active", False)
+	settings.set("onncera_mark_recent", False)
+	view.erase_regions("onncera_mark")
+
+	carets = []
+	for sel in selection:
+		point = sel.b
+		if  sel.b > sel.a:
+			point = point - 1
+		carets.append(point)
+
+	if  carets:
+		selection.clear()
+		for caret in carets:
+			selection.add(caret)
+
+
+class SebMarkTracker(sublime_plugin.ViewEventListener):
+
+	"""
+	- any command other than seb_set_mark breaks the "pressed twice in a row" chain
+	- any edit to the buffer deactivates the mark (copy does not edit the buffer but emacs deactivates the mark for it too)
+	TODO > how do we extend for future commands besides copy?
+	"""
+
+	def on_post_text_command(self, command_name, args):
+		if  command_name != "seb_set_mark":
+			self.view.settings().set("onncera_mark_recent", False)
+		if  command_name == "copy" and self.view.settings().get("onncera_mark_active", False):
+			seb_deactivate_mark(self.view)
+
+	def on_modified(self):
+		if  self.view.settings().get("onncera_mark_active", False):
+			seb_deactivate_mark(self.view)
+
+
 class SebQuitCommand(sublime_plugin.TextCommand):
 
 	""" emacs c-g
@@ -13,26 +58,7 @@ class SebQuitCommand(sublime_plugin.TextCommand):
 	"""
 
 	def run(self, edit):
-		settings  = self.view.settings()
-		selection = self.view.sel()
-
-		settings.set("onncera_mark_active", False)
-		settings.set("onncera_mark_recent", False)
-		self.view.erase_regions("onncera_mark")
-
-		if len(selection) == 0:
-			return
-
-		carets = []
-		for sel in selection:
-			point = sel.b
-			if sel.b > sel.a:
-				point = point - 1
-			carets.append(point)
-
-		selection.clear()
-		for caret in carets:
-			selection.add(caret)
+		seb_deactivate_mark(self.view)
 
 
 class SebOpenLineCommand(sublime_plugin.TextCommand):
@@ -79,7 +105,7 @@ class SebSetMarkCommand(sublime_plugin.TextCommand):
 		selection = view.sel()
 		settings  = view.settings()
 
-		if len(sel) == 0:
+		if  len(selection) == 0:
 			return
 
 		# double tap: the previous command was also seb_set_mark
@@ -98,13 +124,3 @@ class SebSetMarkCommand(sublime_plugin.TextCommand):
 		settings.set("onncera_mark_active", True)
 		settings.set("onncera_mark_recent", True)
 		sublime.status_message("Mark set")
-
-
-class SebMarkTracker(sublime_plugin.ViewEventListener):
-
-	""" - any command other than seb_set_mark breaks the "pressed twice in a row" chain
-	"""
-
-	def on_post_text_command(self, command_name, args):
-		if command_name != "seb_set_mark":
-			self.view.settings().set("onncera_mark_recent", False)

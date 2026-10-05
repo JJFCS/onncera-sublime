@@ -13,6 +13,7 @@
 	},
 
 	// BASIC EMACS COMMANDS
+	{ "keys": ["alt+backspace"], "command": "delete_word", "args": { "forward": false, "sub_words": true } },
 	{ "keys": ["alt+w"], "command": "copy" },
 	{ "keys": ["alt+x"], "command": "show_overlay", "args": {"overlay": "command_palette"} },
 	{ "keys": ["alt+shift+,"], "command": "move_to", "args": {"to": "bof"} },

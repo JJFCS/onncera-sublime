@@ -1,11 +1,9 @@
 
 /* TODOS
 	> learn how to use MC in sublime text then we can know how to implement any features we want
-	> learn how to make use of search features in sublime text without the mouse
 
-	commands that are done with AI and needs checking once have the time
-	> the entire common_commands.py is done with AI
-	> the entire project
+	> the entire common_commands.py is done with the help of AI
+	> the entire project is done with the help of AI
 */
 
 [
@@ -41,6 +39,14 @@
 	{ "keys": ["ctrl+x", "ctrl++"], "command": "increase_font_size" },
 	{ "keys": ["ctrl+x", "ctrl+="], "command": "increase_font_size" },
 	{ "keys": ["ctrl+x", "ctrl+-"], "command": "decrease_font_size" },
+
+	{ "keys": ["f9"],  "command": "show_overlay", "args": {"overlay": "goto", "show_files": true} },
+	{ "keys": ["f10"], "command": "show_overlay", "args": {"overlay": "goto", "text": "@"} },
+	{ "keys": ["f11"], "command": "goto_symbol_in_project" },
+	{ "keys": ["f12"], "command": "show_overlay", "args": {"overlay": "goto", "text": "#"} },
+	{ "keys": ["f13"], "command": "goto_definition" },
+	{ "keys": ["f14"], "command": "goto_reference" },
+	{ "keys": ["f15"], "command": "toggle_side_bar" },
 
 	// MULTIPLE CURSORS
 	{ "keys": ["ctrl+f9"],  "command": "select_lines", "args": {"forward": false} },

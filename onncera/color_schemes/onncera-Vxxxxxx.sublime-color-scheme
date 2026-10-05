@@ -1,0 +1,115 @@
+{
+	"name": "TEMPLE OS DARK",
+
+	"variables": {
+		"background":   "#000000",
+		"foreground":   "#FFFFFF",
+		"cursor":       "#AA0000",
+
+		"builtin":      "#5555FF",
+		"comment":      "#00AA00",
+		"constant":     "#FF55FF",
+		"keyword":      "#0000AA",
+		"string":       "#AA0000",
+		"type":         "#AA5500",
+
+		// Function name badge: black text on grey block
+		"func_fg":      "#000000",
+		"func_bg":      "#AAAAAA",
+
+		// diagnostic badge: bright red text on yellow block
+		"warn_fg":      "#FF5555",
+		"warn_bg":      "#FFFF55",
+
+		"selection_bg": "#1E1420",
+		"gutter_fg":    "#0000AA",
+	},
+
+	"globals": {
+		"background": "var(background)",
+		"foreground": "var(foreground)",
+		"caret": "var(cursor)",
+
+		"line_highlight": "color(var(foreground) alpha(0.06))",
+		"invisibles": "color(var(foreground) alpha(0.25))",
+
+		"selection": "var(selection_bg)",
+		"selection_border": "var(selection_bg)",
+		"inactive_selection": "color(var(selection_bg) alpha(0.4))",
+
+		"misspelling": "var(warn_fg)",
+		"shadow": "color(black alpha(0.5))",
+
+		"accent": "var(cursor)",
+		"brackets_options": "underline",
+		"brackets_foreground": "var(builtin)",
+
+		"gutter": "var(background)",
+		"gutter_foreground": "var(gutter_fg)"
+	},
+
+	"rules": [
+		{
+			"name": "Comment",
+			"scope": "comment, punctuation.definition.comment",
+			"foreground": "var(comment)"
+		},
+		{
+			"name": "String",
+			"scope": "string, constant.character, string.quoted, string.unquoted",
+			"foreground": "var(string)"
+		},
+		{
+			"name": "Keyword",
+			"scope": "keyword, keyword.control, keyword.operator, keyword.declaration, storage, storage.type, storage.modifier, meta.annotation",
+			"foreground": "var(keyword)",
+			"font_style": "bold"
+		},
+		{
+			"name": "Builtin",
+			"scope": "support.function, support.class, support.type, support.variable",
+			"foreground": "var(builtin)",
+			"font_style": "bold"
+		},
+		{
+			"name": "Type",
+			"scope": "entity.name.class, entity.name.struct, entity.name.type, entity.name.enum, entity.name.trait, entity.name.impl, variable.type",
+			"foreground": "var(type)",
+			"font_style": "bold"
+		},
+		{
+			"name": "Constant",
+			"scope": "constant.language, constant.other, constant.numeric, entity.name.constant, support.constant",
+			"foreground": "var(constant)"
+		},
+		{
+			"name": "Function (inverted badge)",
+			// Black text on a light-grey block - a deliberate signature
+			// style from the source theme, not a simplification.
+			"scope": "entity.name.function, entity.name, variable.function",
+			"foreground": "var(func_fg)",
+			"background": "var(func_bg)",
+			"font_style": "bold"
+		},
+		{
+			"name": "Variable",
+			// No dedicated color in the source - plain white, same as
+			// default foreground, so no rule needed at all here; included
+			// only for clarity/documentation.
+			"scope": "variable, variable.parameter, variable.other, variable.language",
+			"foreground": "var(foreground)"
+		},
+		{
+			"name": "Punctuation",
+			"scope": "punctuation, punctuation.separator, punctuation.terminator, punctuation.section",
+			"foreground": "var(foreground)"
+		},
+		{
+			"name": "Invalid / Warning (inverted badge)",
+			"scope": "invalid, invalid.deprecated",
+			"foreground": "var(warn_fg)",
+			"background": "var(warn_bg)",
+			"font_style": "bold"
+		}
+	]
+}

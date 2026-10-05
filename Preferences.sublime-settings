@@ -9,14 +9,17 @@
 	],
 
 	"block_caret":                       true,
+	"caret_extra_bottom":                0,           // HACKY SOL. OF GETTING BLK CURSOR
+	"caret_extra_top":                   0,           // ^^^
+	"caret_extra_width":                 10,          // ^^^
 	"detect_indentation":                false,
 	"draw_white_space":                 "selection",
 	"ensure_newline_at_eof_on_save":     true,
 	"highlight_line":                    true,
 	"index_files":                       true,
-	"inverse_caret_state":               true,
-	"line_padding_top":                  0,  // might need to play around with these settings every time you change fonts
-	"line_padding_bottom":               0,  // might need to play around with these settings every time you change fonts
+	"inverse_caret_state":               false,
+	"line_padding_top":                  0,           // CHANGE VALUES DEPENDING ON THE FONT
+	"line_padding_bottom":               0,           // ^^^
 	"relative_line_numbers":             true,
 	"scroll_past_end":                   true,
 	"trim_trailing_white_space_on_save": true,
@@ -24,5 +27,5 @@
 	"tab_size":                          4,
 	"use_find_clipboard":                false,
 	"word_wrap":                         false,
-	"color_scheme": "onncera-Vxx.sublime-color-scheme",
+	"color_scheme": "onncera-Vxxx.sublime-color-scheme",
 }

@@ -133,12 +133,4 @@
 			{ "key": "has_next_field", "operator": "equal", "operand": true }
 		]
 	},
-
-	{
-		"keys": ["ctrl+g"],
-		"command": "single_selection",
-		"context": [
-			{ "key": "num_selections", "operator": "not_equal", "operand": 1 }
-		]
-	},
 ]

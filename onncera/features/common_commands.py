@@ -19,12 +19,7 @@ def seb_deactivate_mark(view):
 	settings.set("onncera_mark_recent", False)
 	view.erase_regions("onncera_mark")
 
-	carets = []
-	for sel in selection:
-		point = sel.b
-		if  sel.b > sel.a:
-			point = point - 1
-		carets.append(point)
+	carets = [sel.b for sel in selection]
 
 	if  carets:
 		selection.clear()
@@ -82,11 +77,18 @@ class SebMarkTracker(sublime_plugin.ViewEventListener):
 	TODO > how do we extend for future commands besides copy?
 	"""
 
-	KEEP_MARK_COMMANDS = ("swap_move_text")
+	KEEP_MARK_COMMANDS, EXTEND_COMMANDS = ("seb_move_text",), ("move", "move_to")
 
 	def on_text_command(self, command_name, args):
+		settings = self.view.settings()
 		if  command_name in self.KEEP_MARK_COMMANDS:
-			self.view.settings().set("onncera_keep_marked", True)
+			settings.set("onncera_keep_marked", True)
+
+		if  command_name in self.EXTEND_COMMANDS and settings.get("onncera_mark_active", False):
+			args = dict(args or {})
+			if  not args.get("extend", False):
+				args["extend"] = True
+				return (command_name, args)
 
 	def on_post_text_command(self, command_name, args):
 		if  command_name != "seb_set_mark":
@@ -106,11 +108,22 @@ class SebMarkTracker(sublime_plugin.ViewEventListener):
 class SebQuitCommand(sublime_plugin.TextCommand):
 
 	""" emacs c-g
-	- A QUIT COMMAND THAT COLLASPE SELECTION(S) TO THE CURSOR AND DEACTIVATE THE MARK
 	"""
 
 	def run(self, edit):
-		seb_deactivate_mark(self.view)
+		view      = self.view
+		selection = view.sel()
+
+		seb_deactivate_mark(view)
+
+		if  len(selection) > 1:
+			carets  = list(selection)
+			visible = view.visible_region()
+			keep    = next((r for r in reversed(carets) if visible.contains(r.b)), carets[-1])
+
+			selection.clear()
+			selection.add(keep)
+			view.show(keep)
 
 
 class SebOpenLineCommand(sublime_plugin.TextCommand):

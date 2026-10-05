@@ -1,10 +1,11 @@
 
 /* TODOS
-	> ISEARCH
 	> learn how to use MC in sublime text then we can know how to implement any features we want
+	> learn how to make use of search features in sublime text without the mouse
 
 	commands that are done with AI and needs checking once have the time
 	> the entire common_commands.py is done with AI
+	> the entire project
 */
 
 [
@@ -27,6 +28,7 @@
 	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "hardeol", "extend":  false} },
 	{ "keys": ["ctrl+l"], "command": "show_at_center" },
 	{ "keys": ["ctrl+d"], "command": "right_delete"},
+	{ "keys": ["ctrl+s"], "command": "show_panel", "args": {"panel": "find", "reverse": false} },
 	{ "keys": ["ctrl+y"], "command": "paste" },
 	{ "keys": ["ctrl+/"], "command": "undo"}, {"keys": ["ctrl+shift+/"], "command": "redo" },
 	{ "keys": ["ctrl+x", "ctrl+s"], "command": "save" },
